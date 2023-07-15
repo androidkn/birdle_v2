@@ -40,22 +40,25 @@ class MyHomePage extends StatefulWidget {
   State<MyHomePage> createState() => _MyHomePageState();
 }
 
-Game game = Game("easy");
-final _GUESSES = game.getWord().length + 1;
-final _LETTERS = game.getWord().length;
+Game game = Game();
 
 class _MyHomePageState extends State<MyHomePage> {
-  String let1 = "QWERTYUIOP";
-  String let2 = "ASDFGHJKL";
-  String let3 = "ZXCVBNM";
+  final String let1 = "QWERTYUIOP";
+  final String let2 = "ASDFGHJKL";
+  final String let3 = "ZXCVBNM";
   String guess = "";
   int onRow = 0;
+  int _GUESSES = 0;
+  int _LETTERS = 0;
+  bool hardMode = false;
   bool correct = false;
+  dynamic guesses;
+  dynamic parses;
 
-  var guesses = List.generate(_GUESSES, (i) => List.filled(_LETTERS, ""),
-      growable: false);
-  var parses = List.generate(_GUESSES, (i) => List.filled(_LETTERS, ""),
-      growable: false);
+  @override
+  initState() {
+    resetGame(false);
+  }
 
   void enter() {
     setState(() {
@@ -109,6 +112,29 @@ class _MyHomePageState extends State<MyHomePage> {
 
   void fail() {
     //
+  }
+
+  void setMode(bool hardMode) {
+    setState(() {
+      resetGame(hardMode);
+    });
+  }
+
+  void resetGame(bool hardMode) {
+    game.loadMode(hardMode);
+    _GUESSES = game.getWord().length + 1;
+    _LETTERS = game.getWord().length;
+    guess = "";
+    onRow = 0;
+    guesses = List.generate(_GUESSES, (i) => List.filled(_LETTERS, ""),
+        growable: false);
+    parses = List.generate(_GUESSES, (i) => List.filled(_LETTERS, ""),
+        growable: false);
+    debugPrint('mode set to hardmode: $hardMode');
+    debugPrint('GUESSES: $_GUESSES, ${guesses.length}');
+    debugPrint('LETTERS: $_LETTERS, ${guesses[0].length}');
+    correct = false;
+    updateDisp();
   }
 
   void updateDisp() {
@@ -245,6 +271,24 @@ class _MyHomePageState extends State<MyHomePage> {
         ));
   }
 
+  Widget modeSwitch() {
+    return Container(
+        child: Column(
+      children: [
+        ElevatedButton(
+            onPressed: () {
+              setMode(false);
+            },
+            child: const Text('New game (easy mode)')),
+        ElevatedButton(
+            onPressed: () {
+              setMode(true);
+            },
+            child: const Text('New game (hard mode)'))
+      ],
+    ));
+  }
+
   List<LogicalKeyboardKey> keys = [];
 
   @override
@@ -347,6 +391,8 @@ class _MyHomePageState extends State<MyHomePage> {
           }
         },
         child: Scaffold(
+          floatingActionButtonLocation:
+              FloatingActionButtonLocation.endContained,
           /*appBar: AppBar(
         backgroundColor: Theme.of(context).colorScheme.inversePrimary,
         title: Text(widget.title),
@@ -369,10 +415,10 @@ class _MyHomePageState extends State<MyHomePage> {
                     // MAKE IT SO THAT ROWS OF BUTTONS AREN'T PUSHED TO SCREEN BOTTOM
                     crossAxisSpacing: 10,
                     mainAxisSpacing: 10,
-                    crossAxisCount: 5,
+                    crossAxisCount: _LETTERS,
                     children: <Widget>[
-                      for (int i = 0; i < 6; i++) ...[
-                        for (int j = 0; j < 5; j++) ...[
+                      for (int i = 0; i < _GUESSES; i++) ...[
+                        for (int j = 0; j < _LETTERS; j++) ...[
                           letterBox(guesses[i][j], parses[i][j]),
                         ]
                       ]
@@ -411,7 +457,26 @@ class _MyHomePageState extends State<MyHomePage> {
                           ],
                           enterButton(),
                         ])
-                  ]))
+                  ])),
+            ],
+          )),
+          floatingActionButton: Container(
+              child: Column(
+            children: [
+              ElevatedButton.icon(
+                icon: const Icon(Icons.replay),
+                label: const Text('Easy mode'),
+                onPressed: () {
+                  setMode(false);
+                },
+              ),
+              ElevatedButton.icon(
+                icon: const Icon(Icons.replay),
+                label: const Text('Hard mode'),
+                onPressed: () {
+                  setMode(true);
+                },
+              )
             ],
           )),
         ),
