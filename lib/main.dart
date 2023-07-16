@@ -511,13 +511,15 @@ class _MyHomePageState extends State<MyHomePage> {
         Center(
             child: Column(
           children: [
-            const SizedBox(height: 50),
+            const SizedBox(height: 100),
             Flexible(
               child: Container(
                 constraints: BoxConstraints(
                   //minWidth: 400,
                   maxWidth: (_LETTERS * 80),
                 ),
+                //child: FittedBox(
+                //fit: BoxFit.scaleDown,
                 child: GridView.count(
                   primary: false,
                   //physics: const NeverScrollableScrollPhysics(),
@@ -534,11 +536,12 @@ class _MyHomePageState extends State<MyHomePage> {
                     ]
                   ],
                 ),
+                // ), //FittedBox
               ),
             ),
-            const SizedBox(height: 70),
-            Container(
-                constraints: const BoxConstraints(minWidth: 500, maxWidth: 700),
+            //const SizedBox(height: 70),
+            FittedBox(
+                fit: BoxFit.scaleDown,
                 child: Column(children: [
                   Row(
                       mainAxisAlignment: MainAxisAlignment.center,
@@ -570,12 +573,13 @@ class _MyHomePageState extends State<MyHomePage> {
           ],
         )),
         Align(
-            alignment: Alignment.centerRight,
+            alignment: Alignment.topCenter,
             child: Container(
               margin: const EdgeInsets.all(20.0),
-              child: Column(
+              child: Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
+                  //SizedBox(height: 100),
                   /*ElevatedButton.icon(
                         icon: const Icon(Icons.replay),
                         label: const Text(''),
@@ -602,14 +606,14 @@ class _MyHomePageState extends State<MyHomePage> {
                           },
                         ),
                       )*/
-                  FloatingActionButton(
+                  FloatingActionButton.small(
                     onPressed: () {
                       setMode(false);
                     },
                     child: const Icon(Icons.replay),
                   ),
-                  const SizedBox(height: 20),
-                  FloatingActionButton(
+                  const SizedBox(height: 20, width: 20),
+                  FloatingActionButton.small(
                     onPressed: () {
                       _showDialog(context);
                     },
