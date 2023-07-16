@@ -8,6 +8,7 @@ class FiveLetterGuesses {
     'eider',
     'finch',
     'goose',
+    'geese',
     'hairy',
     'heron',
     'junco',

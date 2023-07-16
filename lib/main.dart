@@ -1,4 +1,6 @@
 // ignore_for_file: non_constant_identifier_names
+import 'dart:ui';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'game.dart';
@@ -26,6 +28,10 @@ class MyApp extends StatelessWidget {
               shadowColor: Colors.grey[300],
               surfaceTintColor: Colors.grey[300],
             ),
+          ),
+          floatingActionButtonTheme: FloatingActionButtonThemeData(
+            backgroundColor: Colors.grey[300],
+            shape: const CircleBorder(),
           ),
           textTheme: const TextTheme(
               labelLarge: TextStyle(
@@ -223,19 +229,44 @@ class _MyHomePageState extends State<MyHomePage> {
         ));
   }
 
-  Widget keyBox(String c) {
+  Widget keyBox(String c, String col) {
     return Container(
         key: Key("btn_$c"),
         margin: const EdgeInsets.all(4.0),
         constraints: const BoxConstraints(maxWidth: 45),
         child: TextButton(
-          style: TextButton.styleFrom(
-            backgroundColor: Colors.grey[300],
-            foregroundColor: Colors.black,
-            fixedSize: const Size.fromHeight(50),
-            shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(4.0)),
-          ),
+          style: (col == 'O')
+              ? TextButton.styleFrom(
+                  backgroundColor: const Color.fromARGB(255, 124, 124, 124),
+                  foregroundColor: Colors.white,
+                  fixedSize: const Size.fromHeight(50),
+                  shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(4.0)),
+                )
+              : (col == 'G')
+                  ? TextButton.styleFrom(
+                      backgroundColor: const Color.fromARGB(255, 108, 172, 100),
+                      foregroundColor: Colors.white,
+                      fixedSize: const Size.fromHeight(50),
+                      shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(4.0)),
+                    )
+                  : (col == 'Y')
+                      ? TextButton.styleFrom(
+                          backgroundColor:
+                              const Color.fromARGB(255, 204, 180, 92),
+                          foregroundColor: Colors.white,
+                          fixedSize: const Size.fromHeight(50),
+                          shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(4.0)),
+                        )
+                      : TextButton.styleFrom(
+                          backgroundColor: Colors.grey[300],
+                          foregroundColor: Colors.black,
+                          fixedSize: const Size.fromHeight(50),
+                          shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(4.0)),
+                        ),
           onPressed: () {
             letter(c);
           },
@@ -304,7 +335,8 @@ class _MyHomePageState extends State<MyHomePage> {
       builder: (BuildContext context) {
         return AlertDialog(
           title: const Text("Birdle Help"),
-          content: const Text("Insert instructions here."),
+          content: const Text(
+              "Birdle is a bird version of the popular word game Wordle. The aim is to guess the mystery bird, which is 5 letters long.\n\nTo play, use the on-screen keyboard or the computer keyboard to enter letters. Every guess must be 5 letters long, and MUST be a bird in the bird list stored in the game. Then click enter (->).\n\nIf a letter is yellow, it means that it's in the name of the mystery bird, but not in the right spot.\nIf it's green, it's in the word and in the right spot.\nGray is not in the word at all.\n\nFor example, say the guess is **crane**, and the boxes turn `gray`, `gray`, `gray`, `yellow`, `green`.  Then there's a chance that the mystery bird is **snipe**, because it contains an n that's not in the fourth spot, and it ends with an e.\n\nHave fun!"),
           actions: <Widget>[
             FilledButton(
               child: const Text("OK"),
@@ -475,81 +507,78 @@ class _MyHomePageState extends State<MyHomePage> {
         }
       },
       child: Scaffold(
-          floatingActionButtonLocation: FloatingActionButtonLocation.endDocked,
           body: Stack(children: [
-            Center(
-                child: Column(
-              children: [
-                const SizedBox(height: 50),
-                Flexible(
-                  child: Container(
-                    constraints: BoxConstraints(
-                      //minWidth: 400,
-                      maxWidth: (_LETTERS * 80),
-                    ),
-                    child: GridView.count(
-                      primary: false,
-                      //physics: const NeverScrollableScrollPhysics(),
-                      padding: const EdgeInsets.all(20),
-                      // IF TIME: MAKE PADDING LESS FOR SMALLER SIZE (SCALE FOR SCREEN SCALE)
-                      // MAKE IT SO THAT ROWS OF BUTTONS AREN'T PUSHED TO SCREEN BOTTOM
-                      crossAxisSpacing: 10,
-                      mainAxisSpacing: 10,
-                      crossAxisCount: _LETTERS,
-                      children: <Widget>[
-                        for (int i = 0; i < _GUESSES; i++) ...[
-                          for (int j = 0; j < _LETTERS; j++) ...[
-                            letterBox(guesses[i][j], parses[i][j]),
-                          ]
-                        ]
-                      ],
-                    ),
-                  ),
+        Center(
+            child: Column(
+          children: [
+            const SizedBox(height: 50),
+            Flexible(
+              child: Container(
+                constraints: BoxConstraints(
+                  //minWidth: 400,
+                  maxWidth: (_LETTERS * 80),
                 ),
-                const SizedBox(height: 70),
-                Container(
-                    constraints:
-                        const BoxConstraints(minWidth: 500, maxWidth: 700),
-                    child: Column(children: [
-                      Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            for (int i = 0; i < let1.length; i++) ...[
-                              keyBox(let1[i]),
-                            ]
-                          ]),
-                      Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            for (int i = 0; i < let2.length; i++) ...[
-                              keyBox(let2[i]),
-                            ]
-                          ]),
-                      Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            deleteButton(),
-                            for (int i = 0; i < let3.length; i++) ...[
-                              keyBox(let3[i]),
-                            ],
-                            enterButton(),
-                          ])
-                    ])),
-              ],
-            )),
-            Align(
-                alignment: Alignment.centerRight,
-                child: Container(
-                  margin: const EdgeInsets.all(20.0),
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      ElevatedButton.icon(
+                child: GridView.count(
+                  primary: false,
+                  //physics: const NeverScrollableScrollPhysics(),
+                  padding: const EdgeInsets.all(20),
+                  // MAKE IT SO THAT ROWS OF BUTTONS AREN'T PUSHED TO SCREEN BOTTOM
+                  crossAxisSpacing: 10,
+                  mainAxisSpacing: 10,
+                  crossAxisCount: _LETTERS,
+                  children: <Widget>[
+                    for (int i = 0; i < _GUESSES; i++) ...[
+                      for (int j = 0; j < _LETTERS; j++) ...[
+                        letterBox(guesses[i][j], parses[i][j]),
+                      ]
+                    ]
+                  ],
+                ),
+              ),
+            ),
+            const SizedBox(height: 70),
+            Container(
+                constraints: const BoxConstraints(minWidth: 500, maxWidth: 700),
+                child: Column(children: [
+                  Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        for (int i = 0; i < let1.length; i++) ...[
+                          keyBox(let1[i], game.getLetterData(let1[i])),
+                        ]
+                      ]),
+                  Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        for (int i = 0; i < let2.length; i++) ...[
+                          keyBox(let2[i], game.getLetterData(let2[i])),
+                        ]
+                      ]),
+                  Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        deleteButton(),
+                        for (int i = 0; i < let3.length; i++) ...[
+                          keyBox(let3[i], game.getLetterData(let3[i])),
+                        ],
+                        enterButton(),
+                      ])
+                ])),
+          ],
+        )),
+        Align(
+            alignment: Alignment.centerRight,
+            child: Container(
+              margin: const EdgeInsets.all(20.0),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  /*ElevatedButton.icon(
                         icon: const Icon(Icons.replay),
-                        label: const Text('Easy'),
+                        label: const Text(''),
                         onPressed: () {
                           setMode(false);
                         },
@@ -563,15 +592,31 @@ class _MyHomePageState extends State<MyHomePage> {
                         },
                       ),
                       const SizedBox(height: 20),
-                      ElevatedButton.icon(
-                        icon: const Icon(Icons.help),
-                        label: const Text('Q'),
-                        onPressed: () {
-                          _showDialog(context);
-                        },
-                      ),
-                    ],
+                      Container(
+                        constraints: BoxConstraints(maxWidth: 50),
+                        child: ElevatedButton.icon(
+                          icon: const Icon(Icons.help),
+                          label: const Text(''),
+                          onPressed: () {
+                            _showDialog(context);
+                          },
+                        ),
+                      )*/
+                  FloatingActionButton(
+                    onPressed: () {
+                      setMode(false);
+                    },
+                    child: const Icon(Icons.replay),
                   ),
-                )),
-          ])));
+                  const SizedBox(height: 20),
+                  FloatingActionButton(
+                    onPressed: () {
+                      _showDialog(context);
+                    },
+                    child: const Icon(Icons.help),
+                  )
+                ],
+              ),
+            )),
+      ])));
 }

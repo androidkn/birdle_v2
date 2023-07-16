@@ -45,8 +45,8 @@ class Game {
     return _word;
   }
 
-  List getLetterData() {
-    return _letterData;
+  String getLetterData(String letter) {
+    return _letterData[letter.codeUnitAt(0) - 65];
   }
 
   String parseGuess(String guess) {
