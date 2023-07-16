@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_layout_grid/flutter_layout_grid.dart';
 import 'game.dart';
 
 void main() {
@@ -15,9 +16,17 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Birdle v2',
       theme: ThemeData(
-          colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
+          colorScheme: ColorScheme.fromSeed(seedColor: Colors.grey),
           useMaterial3: true,
           fontFamily: 'Helvetica',
+          elevatedButtonTheme: ElevatedButtonThemeData(
+            style: ElevatedButton.styleFrom(
+              backgroundColor: Colors.grey[300],
+              foregroundColor: Colors.black,
+              shadowColor: Colors.grey[300],
+              surfaceTintColor: Colors.grey[300],
+            ),
+          ),
           textTheme: const TextTheme(
               labelLarge: TextStyle(
                 fontWeight: FontWeight.bold,
@@ -217,6 +226,7 @@ class _MyHomePageState extends State<MyHomePage> {
     return Container(
         key: Key("btn_$c"),
         margin: const EdgeInsets.all(4.0),
+        constraints: const BoxConstraints(maxWidth: 45),
         child: TextButton(
           style: TextButton.styleFrom(
             backgroundColor: Colors.grey[300],
@@ -224,7 +234,6 @@ class _MyHomePageState extends State<MyHomePage> {
             fixedSize: Size.fromHeight(50),
             shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(4.0)),
-            padding: const EdgeInsets.all(20.0),
           ),
           onPressed: () {
             letter(c);
@@ -259,7 +268,7 @@ class _MyHomePageState extends State<MyHomePage> {
           style: TextButton.styleFrom(
             backgroundColor: Colors.grey[300],
             foregroundColor: Colors.black,
-            fixedSize: Size.fromHeight(50),
+            fixedSize: const Size.fromHeight(50),
             shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(4.0)),
             padding: const EdgeInsets.all(20.0),
@@ -289,196 +298,280 @@ class _MyHomePageState extends State<MyHomePage> {
     ));
   }
 
+  void _showDialog(BuildContext context) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text("Birdle Help"),
+          content: Text("Insert instructions here."),
+          actions: <Widget>[
+            FilledButton(
+              child: Text("OK"),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            ),
+          ],
+        );
+      },
+    );
+  }
+
   List<LogicalKeyboardKey> keys = [];
 
   @override
   Widget build(BuildContext context) => RawKeyboardListener(
-        autofocus: true,
-        focusNode: FocusNode(),
-        onKey: (event) {
-          final key = event.logicalKey;
-          if (event is RawKeyUpEvent) {
-            setState(() => keys.clear());
-          }
-          if (keys.contains(key)) return;
-          if (event is RawKeyDownEvent) {
-            if (event.isKeyPressed(LogicalKeyboardKey.keyA)) {
+      autofocus: true,
+      focusNode: FocusNode(),
+      onKey: (event) {
+        final key = event.logicalKey;
+        if (event is RawKeyUpEvent) {
+          setState(() => keys.clear());
+        }
+        if (keys.contains(key)) return;
+        if (event is RawKeyDownEvent) {
+          setState(() => keys.add(key));
+          if (event.isKeyPressed(LogicalKeyboardKey.keyA)) {
+            if (keys[keys.length - 1] == LogicalKeyboardKey.keyA) {
               letter('A');
             }
-            if (event.isKeyPressed(LogicalKeyboardKey.keyB)) {
+          }
+          if (event.isKeyPressed(LogicalKeyboardKey.keyB)) {
+            if (keys[keys.length - 1] == LogicalKeyboardKey.keyB) {
               letter('B');
             }
-            if (event.isKeyPressed(LogicalKeyboardKey.keyC)) {
+          }
+          if (event.isKeyPressed(LogicalKeyboardKey.keyC)) {
+            if (keys[keys.length - 1] == LogicalKeyboardKey.keyC) {
               letter('C');
             }
-            if (event.isKeyPressed(LogicalKeyboardKey.keyD)) {
+          }
+          if (event.isKeyPressed(LogicalKeyboardKey.keyD)) {
+            if (keys[keys.length - 1] == LogicalKeyboardKey.keyD) {
               letter('D');
             }
-            if (event.isKeyPressed(LogicalKeyboardKey.keyE)) {
+          }
+          if (event.isKeyPressed(LogicalKeyboardKey.keyE)) {
+            if (keys[keys.length - 1] == LogicalKeyboardKey.keyE) {
               letter('E');
             }
-            if (event.isKeyPressed(LogicalKeyboardKey.keyF)) {
+          }
+          if (event.isKeyPressed(LogicalKeyboardKey.keyF)) {
+            if (keys[keys.length - 1] == LogicalKeyboardKey.keyF) {
               letter('F');
             }
-            if (event.isKeyPressed(LogicalKeyboardKey.keyG)) {
+          }
+          if (event.isKeyPressed(LogicalKeyboardKey.keyG)) {
+            if (keys[keys.length - 1] == LogicalKeyboardKey.keyG) {
               letter('G');
             }
-            if (event.isKeyPressed(LogicalKeyboardKey.keyH)) {
+          }
+          if (event.isKeyPressed(LogicalKeyboardKey.keyH)) {
+            if (keys[keys.length - 1] == LogicalKeyboardKey.keyH) {
               letter('H');
             }
-            if (event.isKeyPressed(LogicalKeyboardKey.keyI)) {
+          }
+          if (event.isKeyPressed(LogicalKeyboardKey.keyI)) {
+            if (keys[keys.length - 1] == LogicalKeyboardKey.keyI) {
               letter('I');
             }
-            if (event.isKeyPressed(LogicalKeyboardKey.keyJ)) {
+          }
+          if (event.isKeyPressed(LogicalKeyboardKey.keyJ)) {
+            if (keys[keys.length - 1] == LogicalKeyboardKey.keyJ) {
               letter('J');
             }
-            if (event.isKeyPressed(LogicalKeyboardKey.keyK)) {
+          }
+          if (event.isKeyPressed(LogicalKeyboardKey.keyK)) {
+            if (keys[keys.length - 1] == LogicalKeyboardKey.keyK) {
               letter('K');
             }
-            if (event.isKeyPressed(LogicalKeyboardKey.keyL)) {
+          }
+          if (event.isKeyPressed(LogicalKeyboardKey.keyL)) {
+            if (keys[keys.length - 1] == LogicalKeyboardKey.keyL) {
               letter('L');
             }
-            if (event.isKeyPressed(LogicalKeyboardKey.keyM)) {
+          }
+          if (event.isKeyPressed(LogicalKeyboardKey.keyM)) {
+            if (keys[keys.length - 1] == LogicalKeyboardKey.keyM) {
               letter('M');
             }
-            if (event.isKeyPressed(LogicalKeyboardKey.keyN)) {
+          }
+          if (event.isKeyPressed(LogicalKeyboardKey.keyN)) {
+            if (keys[keys.length - 1] == LogicalKeyboardKey.keyN) {
               letter('N');
             }
-            if (event.isKeyPressed(LogicalKeyboardKey.keyO)) {
+          }
+          if (event.isKeyPressed(LogicalKeyboardKey.keyO)) {
+            if (keys[keys.length - 1] == LogicalKeyboardKey.keyO) {
               letter('O');
             }
-            if (event.isKeyPressed(LogicalKeyboardKey.keyP)) {
+          }
+          if (event.isKeyPressed(LogicalKeyboardKey.keyP)) {
+            if (keys[keys.length - 1] == LogicalKeyboardKey.keyP) {
               letter('P');
             }
-            if (event.isKeyPressed(LogicalKeyboardKey.keyQ)) {
+          }
+          if (event.isKeyPressed(LogicalKeyboardKey.keyQ)) {
+            if (keys[keys.length - 1] == LogicalKeyboardKey.keyQ) {
               letter('Q');
             }
-            if (event.isKeyPressed(LogicalKeyboardKey.keyR)) {
+          }
+          if (event.isKeyPressed(LogicalKeyboardKey.keyR)) {
+            if (keys[keys.length - 1] == LogicalKeyboardKey.keyR) {
               letter('R');
             }
-            if (event.isKeyPressed(LogicalKeyboardKey.keyS)) {
+          }
+          if (event.isKeyPressed(LogicalKeyboardKey.keyS)) {
+            if (keys[keys.length - 1] == LogicalKeyboardKey.keyS) {
               letter('S');
             }
-            if (event.isKeyPressed(LogicalKeyboardKey.keyT)) {
+          }
+          if (event.isKeyPressed(LogicalKeyboardKey.keyT)) {
+            if (keys[keys.length - 1] == LogicalKeyboardKey.keyT) {
               letter('T');
             }
-            if (event.isKeyPressed(LogicalKeyboardKey.keyU)) {
+          }
+          if (event.isKeyPressed(LogicalKeyboardKey.keyU)) {
+            if (keys[keys.length - 1] == LogicalKeyboardKey.keyU) {
               letter('U');
             }
-            if (event.isKeyPressed(LogicalKeyboardKey.keyV)) {
+          }
+          if (event.isKeyPressed(LogicalKeyboardKey.keyV)) {
+            if (keys[keys.length - 1] == LogicalKeyboardKey.keyV) {
               letter('V');
             }
-            if (event.isKeyPressed(LogicalKeyboardKey.keyW)) {
+          }
+          if (event.isKeyPressed(LogicalKeyboardKey.keyW)) {
+            if (keys[keys.length - 1] == LogicalKeyboardKey.keyW) {
               letter('W');
             }
-            if (event.isKeyPressed(LogicalKeyboardKey.keyX)) {
+          }
+          if (event.isKeyPressed(LogicalKeyboardKey.keyX)) {
+            if (keys[keys.length - 1] == LogicalKeyboardKey.keyX) {
               letter('X');
             }
-            if (event.isKeyPressed(LogicalKeyboardKey.keyY)) {
+          }
+          if (event.isKeyPressed(LogicalKeyboardKey.keyY)) {
+            if (keys[keys.length - 1] == LogicalKeyboardKey.keyY) {
               letter('Y');
             }
-            if (event.isKeyPressed(LogicalKeyboardKey.keyZ)) {
+          }
+          if (event.isKeyPressed(LogicalKeyboardKey.keyZ)) {
+            if (keys[keys.length - 1] == LogicalKeyboardKey.keyZ) {
               letter('Z');
             }
-            if (event.isKeyPressed(LogicalKeyboardKey.enter)) {
+          }
+          if (event.isKeyPressed(LogicalKeyboardKey.enter)) {
+            if (keys[keys.length - 1] == LogicalKeyboardKey.enter) {
               enter();
             }
-            if (event.isKeyPressed(LogicalKeyboardKey.backspace)) {
+          }
+          if (event.isKeyPressed(LogicalKeyboardKey.backspace)) {
+            if (keys[keys.length - 1] == LogicalKeyboardKey.backspace) {
               delete();
             }
-
-            setState(() => keys.add(key));
           }
-        },
-        child: Scaffold(
-          floatingActionButtonLocation:
-              FloatingActionButtonLocation.endContained,
-          /*appBar: AppBar(
-        backgroundColor: Theme.of(context).colorScheme.inversePrimary,
-        title: Text(widget.title),
-      ),*/
-          body: Center(
-              child: Column(
-            children: [
-              const SizedBox(height: 50),
-              Flexible(
-                child: Container(
-                  constraints: const BoxConstraints(
-                    minWidth: 400,
-                    maxWidth: 400,
-                  ),
-                  child: GridView.count(
-                    primary: false,
-                    //physics: const NeverScrollableScrollPhysics(),
-                    padding: const EdgeInsets.all(20),
-                    // IF TIME: MAKE PADDING LESS FOR SMALLER SIZE (SCALE FOR SCREEN SCALE)
-                    // MAKE IT SO THAT ROWS OF BUTTONS AREN'T PUSHED TO SCREEN BOTTOM
-                    crossAxisSpacing: 10,
-                    mainAxisSpacing: 10,
-                    crossAxisCount: _LETTERS,
-                    children: <Widget>[
-                      for (int i = 0; i < _GUESSES; i++) ...[
-                        for (int j = 0; j < _LETTERS; j++) ...[
-                          letterBox(guesses[i][j], parses[i][j]),
+        }
+      },
+      child: Scaffold(
+          floatingActionButtonLocation: FloatingActionButtonLocation.endDocked,
+          body: Stack(children: [
+            Center(
+                child: Column(
+              children: [
+                const SizedBox(height: 50),
+                Flexible(
+                  child: Container(
+                    constraints: BoxConstraints(
+                      //minWidth: 400,
+                      maxWidth: (_LETTERS * 80),
+                    ),
+                    child: GridView.count(
+                      primary: false,
+                      //physics: const NeverScrollableScrollPhysics(),
+                      padding: const EdgeInsets.all(20),
+                      // IF TIME: MAKE PADDING LESS FOR SMALLER SIZE (SCALE FOR SCREEN SCALE)
+                      // MAKE IT SO THAT ROWS OF BUTTONS AREN'T PUSHED TO SCREEN BOTTOM
+                      crossAxisSpacing: 10,
+                      mainAxisSpacing: 10,
+                      crossAxisCount: _LETTERS,
+                      children: <Widget>[
+                        for (int i = 0; i < _GUESSES; i++) ...[
+                          for (int j = 0; j < _LETTERS; j++) ...[
+                            letterBox(guesses[i][j], parses[i][j]),
+                          ]
                         ]
-                      ]
-                    ],
+                      ],
+                    ),
                   ),
                 ),
-              ),
-              const SizedBox(height: 70),
-              Container(
-                  constraints:
-                      const BoxConstraints(minWidth: 500, maxWidth: 700),
-                  child: Column(children: [
-                    Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          for (int i = 0; i < let1.length; i++) ...[
-                            keyBox(let1[i]),
-                          ]
-                        ]),
-                    Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          for (int i = 0; i < let2.length; i++) ...[
-                            keyBox(let2[i]),
-                          ]
-                        ]),
-                    Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          deleteButton(),
-                          for (int i = 0; i < let3.length; i++) ...[
-                            keyBox(let3[i]),
-                          ],
-                          enterButton(),
-                        ])
-                  ])),
-            ],
-          )),
-          floatingActionButton: Container(
-              child: Column(
-            children: [
-              ElevatedButton.icon(
-                icon: const Icon(Icons.replay),
-                label: const Text('Easy mode'),
-                onPressed: () {
-                  setMode(false);
-                },
-              ),
-              ElevatedButton.icon(
-                icon: const Icon(Icons.replay),
-                label: const Text('Hard mode'),
-                onPressed: () {
-                  setMode(true);
-                },
-              )
-            ],
-          )),
-        ),
-      );
+                const SizedBox(height: 70),
+                Container(
+                    constraints:
+                        const BoxConstraints(minWidth: 500, maxWidth: 700),
+                    child: Column(children: [
+                      Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            for (int i = 0; i < let1.length; i++) ...[
+                              keyBox(let1[i]),
+                            ]
+                          ]),
+                      Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            for (int i = 0; i < let2.length; i++) ...[
+                              keyBox(let2[i]),
+                            ]
+                          ]),
+                      Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            deleteButton(),
+                            for (int i = 0; i < let3.length; i++) ...[
+                              keyBox(let3[i]),
+                            ],
+                            enterButton(),
+                          ])
+                    ])),
+              ],
+            )),
+            Align(
+                alignment: Alignment.centerRight,
+                child: Container(
+                  margin: const EdgeInsets.all(20.0),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      ElevatedButton.icon(
+                        icon: const Icon(Icons.replay),
+                        label: const Text('Easy'),
+                        onPressed: () {
+                          setMode(false);
+                        },
+                      ),
+                      const SizedBox(height: 20),
+                      ElevatedButton.icon(
+                        icon: const Icon(Icons.replay),
+                        label: const Text('Hard'),
+                        onPressed: () {
+                          setMode(true);
+                        },
+                      ),
+                      const SizedBox(height: 20),
+                      ElevatedButton.icon(
+                        icon: const Icon(Icons.help),
+                        label: const Text('Q'),
+                        onPressed: () {
+                          _showDialog(context);
+                        },
+                      ),
+                    ],
+                  ),
+                )),
+          ])));
 }

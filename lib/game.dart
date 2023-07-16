@@ -1,6 +1,3 @@
-//import 'dart:io';
-import 'package:universal_io/io.dart' as io;
-import 'dart:convert';
 //import 'dart:async';
 import 'dart:math';
 
@@ -39,63 +36,8 @@ class Game {
     _letterData = List<String>.filled(26, "-");
   }
 
-  Future<void> _readBirdsHttp(String pathname, var destination) async {
-    final file = io.File(pathname);
-    Stream<String> lines = file
-        .openRead()
-        .transform(utf8.decoder) // Decode bytes to UTF-8.
-        .transform(const LineSplitter()); // Convert stream to individual lines.
-    try {
-      await for (var line in lines) {
-        //print('$pathname:   $line: ${line.length} characters');
-        destination.add(line);
-      }
-      print('File is now closed.');
-    } catch (e) {
-      print('Error: $e');
-    }
-    for (String s in _birds) {
-      print("Birds has:   $s");
-    }
-    for (String s in _guessList) {
-      print("GuessList has:   $s");
-    }
-  }
-
-  Future<void> _readBirdsAsyncFile(String pathname, var destination) async {
-    final file = io.File(pathname);
-    Stream<String> lines = file
-        .openRead()
-        .transform(utf8.decoder) // Decode bytes to UTF-8.
-        .transform(const LineSplitter()); // Convert stream to individual lines.
-    try {
-      await for (var line in lines) {
-        //print('$pathname:   $line: ${line.length} characters');
-        destination.add(line);
-      }
-      print('File is now closed.');
-    } catch (e) {
-      print('Error: $e');
-    }
-    for (String s in _birds) {
-      print("Birds has:   $s");
-    }
-    for (String s in _guessList) {
-      print("GuessList has:   $s");
-    }
-  }
-
-  List<String> _readBirds(String pathname, List<String> destination) {
-    final file = io.File(pathname);
-    destination = file.readAsLinesSync();
-    //destination.forEach((l) => print("2: $pathname:     $l"));
-    return destination;
-  }
-
   String _chooseBird() {
-    print("length is ${_birds.length}");
     int i = Random().nextInt(_birds.length - 1);
-    print('***************i is $i');
     return _birds[i];
   }
 
