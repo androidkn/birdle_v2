@@ -1,10 +1,10 @@
 //import 'dart:async';
 import 'dart:math';
-
-import 'AllBirdList.dart';
-import 'AllGuessList.dart';
-import 'FiveLetterBirds.dart';
-import 'FiveLetterGuesses.dart';
+import 'package:flutter/material.dart';
+import 'all_bird_list.dart';
+import 'all_guess_list.dart';
+import 'five_letter_birds.dart';
+import 'five_letter_guesses.dart';
 
 class Game {
   late String _word;
@@ -31,8 +31,8 @@ class Game {
     }
     _word = _chooseBird();
     _word = _word.toUpperCase();
-    print(_word);
-    print("${_word.length} characters");
+    debugPrint(_word);
+    debugPrint("${_word.length} characters");
     _letterData = List<String>.filled(26, "-");
   }
 
@@ -59,8 +59,8 @@ class Game {
       result[i] = 'O';
     }
     for (int i = 0; i < tempWord.length; i++) {
-      print(tempWord[i]);
-    } //debug
+      debugPrint(tempWord[i]);
+    }
     for (int i = 0; i < tempWord.length; i++) {
       if (tempWord[i] == guess[i].toUpperCase()) {
         result[i] = 'G';
@@ -103,11 +103,11 @@ class Game {
   bool validGuess(String guess) {
     bool valid = true;
     if (!_guessList.contains(guess.toLowerCase())) {
-      print("not in bird list");
+      debugPrint("not in bird list");
       valid = false;
     }
     if (guess.length != _word.length) {
-      print("length does not match");
+      debugPrint("length does not match");
       valid = false;
     }
     return valid;

@@ -1,6 +1,6 @@
+// ignore_for_file: non_constant_identifier_names
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_layout_grid/flutter_layout_grid.dart';
 import 'game.dart';
 
 void main() {
@@ -66,6 +66,7 @@ class _MyHomePageState extends State<MyHomePage> {
 
   @override
   initState() {
+    super.initState();
     resetGame(false);
   }
 
@@ -75,7 +76,7 @@ class _MyHomePageState extends State<MyHomePage> {
         debugPrint("guess is $guess");
         if (game.validGuess(guess) && !correct) {
           String parsedGuess = game.parseGuess(guess);
-          print(parsedGuess);
+          debugPrint(parsedGuess);
           if (game.isCorrect(parsedGuess)) {
             correct = true;
           }
@@ -89,7 +90,7 @@ class _MyHomePageState extends State<MyHomePage> {
             //fail();
           }
         } else {
-          print("Please enter valid guess");
+          debugPrint("Please enter valid guess");
         }
       }
     });
@@ -231,7 +232,7 @@ class _MyHomePageState extends State<MyHomePage> {
           style: TextButton.styleFrom(
             backgroundColor: Colors.grey[300],
             foregroundColor: Colors.black,
-            fixedSize: Size.fromHeight(50),
+            fixedSize: const Size.fromHeight(50),
             shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(4.0)),
           ),
@@ -249,7 +250,7 @@ class _MyHomePageState extends State<MyHomePage> {
           style: TextButton.styleFrom(
             backgroundColor: Colors.grey[300],
             foregroundColor: Colors.black,
-            fixedSize: Size.fromHeight(50),
+            fixedSize: const Size.fromHeight(50),
             shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(4.0)),
             padding: const EdgeInsets.all(20.0),
@@ -281,8 +282,7 @@ class _MyHomePageState extends State<MyHomePage> {
   }
 
   Widget modeSwitch() {
-    return Container(
-        child: Column(
+    return Column(
       children: [
         ElevatedButton(
             onPressed: () {
@@ -295,7 +295,7 @@ class _MyHomePageState extends State<MyHomePage> {
             },
             child: const Text('New game (hard mode)'))
       ],
-    ));
+    );
   }
 
   void _showDialog(BuildContext context) {
@@ -303,11 +303,11 @@ class _MyHomePageState extends State<MyHomePage> {
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
-          title: Text("Birdle Help"),
-          content: Text("Insert instructions here."),
+          title: const Text("Birdle Help"),
+          content: const Text("Insert instructions here."),
           actions: <Widget>[
             FilledButton(
-              child: Text("OK"),
+              child: const Text("OK"),
               onPressed: () {
                 Navigator.of(context).pop();
               },
