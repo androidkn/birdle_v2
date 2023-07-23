@@ -1,5 +1,4 @@
 // ignore_for_file: non_constant_identifier_names
-import 'dart:ui';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -233,7 +232,7 @@ class _MyHomePageState extends State<MyHomePage> {
     return Container(
         key: Key("btn_$c"),
         margin: const EdgeInsets.all(4.0),
-        constraints: const BoxConstraints(maxWidth: 45),
+        constraints: const BoxConstraints(maxWidth: 35),
         child: TextButton(
           style: (col == 'O')
               ? TextButton.styleFrom(
@@ -277,25 +276,27 @@ class _MyHomePageState extends State<MyHomePage> {
   Widget deleteButton() {
     return Container(
         margin: const EdgeInsets.all(4.0),
+        constraints: const BoxConstraints(maxWidth: 50),
         child: TextButton(
           style: TextButton.styleFrom(
             backgroundColor: Colors.grey[300],
             foregroundColor: Colors.black,
             fixedSize: const Size.fromHeight(50),
             shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(4.0)),
-            padding: const EdgeInsets.all(20.0),
+                borderRadius: BorderRadius.circular(5.0)),
+            padding: const EdgeInsets.all(8.0),
           ),
           onPressed: () {
             delete();
           },
-          child: const Text("<<"),
+          child: const Icon(Icons.backspace),
         ));
   }
 
   Widget enterButton() {
     return Container(
         margin: const EdgeInsets.all(4.0),
+        constraints: const BoxConstraints(maxWidth: 55),
         child: TextButton(
           style: TextButton.styleFrom(
             backgroundColor: Colors.grey[300],
@@ -303,12 +304,12 @@ class _MyHomePageState extends State<MyHomePage> {
             fixedSize: const Size.fromHeight(50),
             shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(4.0)),
-            padding: const EdgeInsets.all(20.0),
+            padding: const EdgeInsets.all(8.0),
           ),
           onPressed: () {
             enter();
           },
-          child: const Text("->"),
+          child: const Icon(Icons.forward),
         ));
   }
 
@@ -511,7 +512,7 @@ class _MyHomePageState extends State<MyHomePage> {
         Center(
             child: Column(
           children: [
-            const SizedBox(height: 100),
+            const SizedBox(height: 70),
             Flexible(
               child: Container(
                 constraints: BoxConstraints(
